@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <link href="/static/css/form.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/static/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/static/js/login.js"></script>
+</head>
+<body>
+<div class="body">
+    <div class="left">
+        <img class="cat" src="/static/img/cat.gif">
+    </div>
+    <div class="main">
+        <form class="form" method="post" action="#">
+            <label id="error-text"></label><br>
+            邮&emsp;箱<input id="email" class="text-input" name="email" required  placeholder="  请输入邮箱" type="text"><br>
+            &nbsp;密&emsp;码<input id="password" class="text-input" name="password" type="password" required placeholder="  请输入密码"> <br>
+            验证码<input id="captcha"class="captcha"  type="text" name="captcha" required placeholder="  请输入验证码">
+            <img id="captcha-img" class="captcha-img" align="middle"  src="/defaultKaptcha"   onclick="this.src='/defaultKaptcha?d='+Math.random()"><br>
+            <span id="error-message"></span><br>
+            <input class="button-style" type="button"  value="登陆" onclick="Submit()" >&emsp;&emsp;&emsp;
+            <input class="button-style" type="reset"  value="reset"><br/>
+            <input class="button-style" type="button" value="注册链接" onclick="toEnroll()">
+        </form>
+    </div>
+</div>
+</body>
+</html>

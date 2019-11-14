@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.blog.dao.RoleDao">
+    <resultMap id="getRoleByIdMap" type="demo.blog.model.Role">
+        <result property="id" column="id"/>
+        <result property="roleName" column="roleName"/>
+        <collection property="powers" column="id" select="demo.blog.dao.RoleDao.getPowerById"/>
+    </resultMap>
+<select id="getRoleById" resultMap="getRoleByIdMap">
+    select id,roleName
+    from role
+    where id=#{id,jdbcType=INTEGER}
+</select>
+    <select id="getPowerById"  resultType="demo.blog.model.Power">
+    select distinct p.id,p.power
+    from power as p, role_power as rp
+    where  rp.powerId = p.id
+    and rp.roleId = #{id,jdbcType=INTEGER}
+</select>
+</mapper>

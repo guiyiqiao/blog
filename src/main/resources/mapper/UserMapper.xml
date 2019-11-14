@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.blog.dao.UserDao">
+    <resultMap id="selectUserMap" type="demo.blog.model.User">
+        <id property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="nickname" column="nickname"/>
+        <result property="status" column="status"/>
+        <result property="status" column="status"/>
+        <result property="roleId" column="roleId"/>
+
+        <association property="role" javaType="demo.blog.model.Role" column="roleId"
+                     select="demo.blog.dao.RoleDao.getRoleById">
+        </association>
+        <collection property="powers" column="roleId"
+                    select="demo.blog.dao.RoleDao.getPowerById">
+        </collection>
+    </resultMap>
+
+    <select id="selectUser"  resultMap="selectUserMap">
+        select id,email,password,salt,nickname,status,roleId
+        from user
+        where id = #{id}
+    </select>
+    <select id="selectUserByEmail" parameterType="java.lang.String" resultType="demo.blog.model.User">
+        select id,password, salt,status
+        from user
+        where email =#{email}
+    </select>
+    <insert id="insertUser" parameterType="demo.blog.model.User" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        user(email,password,salt,nickname,status,roleId)
+        values (#{email,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},
+        #{salt,jdbcType=VARCHAR},#{nickname,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{roleId,jdbcType=INTEGER})
+    </insert>
+ <!--
+
+    <update id="updateUser" parameterType="demo.blog.model.User">
+        update user
+        <set>
+            <if test="password!=null">
+                password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="nickname!=null">
+                nickname =#{nickname,jdbcType=VARCHAR}
+            </if>
+            <if test="status!=null">
+                status =#{status,jdbcType=INTEGER}
+            </if>
+            <if test="roleId!=null">
+                roleId =#{roleId,jdbcType=INTEGER}
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteUser">
+        delete from user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+
+
+    <select id="countUser" resultType="java.lang.Integer">
+        select count(id)
+        from user
+        where status = 1
+    </select>-->
+</mapper>
